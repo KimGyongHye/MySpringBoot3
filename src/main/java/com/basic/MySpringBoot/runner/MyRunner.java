@@ -35,6 +35,8 @@ public class MyRunner implements ApplicationRunner {
         System.out.println("age : "+age);
         System.out.println("fullName : "+fullName);
 
+        System.out.println("KGH : git 수정 파일 업로드");
+
         System.out.println("port number : "+environment.getProperty("local.server.port"));
 
     }
