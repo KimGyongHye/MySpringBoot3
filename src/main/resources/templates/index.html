@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<body>
+<table border="1">
+    <tr>
+        <th>SEQ</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>CreatedAt</th>
+        <th>수정</th>
+        <th>삭제</th>
+    </tr>
+    <tr th:each="user, userState : ${users}">
+        <td th:text="${userState.count}"></td> <!-- index는 0부터 , count가 1부터 -->
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+        <td><a th:href="@{/userspage/edit/{id}(id=${user.id})}">update</a></td>
+        <td><a th:href="@{/userspage/delete/{id}(id=${user.id})}">delete</a></td>
+    </tr>
+</table>
+<a href="../userspage/signup">등록하기</a>
+</body>
+</html>

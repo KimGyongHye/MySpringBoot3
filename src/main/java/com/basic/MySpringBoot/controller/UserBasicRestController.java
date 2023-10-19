@@ -47,6 +47,11 @@ public class UserBasicRestController {
         return userRepository.findByEmail(email).orElseThrow(()->new BusinessException("User Not Found",HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/name/{name}")
+    public List<User> getUserByName(@PathVariable String name){
+        return userRepository.findByName(name);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         User user = userRepository.findById(id)
@@ -54,6 +59,18 @@ public class UserBasicRestController {
         userRepository.delete(user);
 //return ResponseEntity.ok(user);
         return ResponseEntity.ok("delete user success");
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User userNewData) {
+        // 왜 업데이트를 할 때 id를 따로 받는가?
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND));
+        // 수정하려는 값 저장
+        user.setName(userNewData.getName());
+        // 트랜젝션을 안 걸면 이렇게 해야함
+        userRepository.save(user);
+        return user;
     }
 
 
